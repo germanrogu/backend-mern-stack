@@ -4,8 +4,9 @@ import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
-import authRoutes from "./routes/authRoutes";
-import errorMiddleware from "./middleware/errorMiddleware";
+import taskRoutes from "./src/routes/taskRoutes";
+import authRoutes from "./src/routes/authRoutes";
+import errorMiddleware from "./src/middleware/errorMiddleware";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(limiter);
 
 // Rutas
 app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
 
 // Middleware de errores centralizado
 app.use(errorMiddleware);
