@@ -1,0 +1,68 @@
+version: '3.8'
+services:
+  auth-service:
+    build:
+      context: ./auth-service  # Corrected: Build context is the root directory
+      dockerfile: Dockerfile # Explicitly specify the Dockerfile
+    container_name: auth-service
+    ports:
+      - "4001:4001"
+    environment:
+      - PORT=4001
+      - MONGO_URI=mongodb://mongo:27017/authdb
+      - JWT_SECRET=your_jwt_secret
+      - JWT_EXPIRES_IN=1h
+      - SALT_FACTOR=12
+      - RABBITMQ_URL=amqp://rabbitmq
+    depends_on:
+      - mongo
+      - rabbitmq
+
+  task-service:
+    build:
+      context: ./task-service  # Corrected: Build context is the root directory
+      dockerfile: Dockerfile # Explicitly specify the Dockerfile
+    container_name: task-service
+    ports:
+      - "4002:4002"
+    environment:
+      - PORT=4002
+      - MONGO_URI=mongodb://mongo:27017/taskdb
+      - JWT_SECRET=your_jwt_secret
+      - RABBITMQ_URL=amqp://rabbitmq
+    depends_on:
+      - mongo
+      - rabbitmq
+
+  api-gateway:
+    build:
+      context: ./api-gateway  # Corrected: Build context is the root directory
+      dockerfile: Dockerfile # Explicitly specify the Dockerfile
+    container_name: api-gateway
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - AUTH_SERVICE_URL=http://auth-service:4001
+      - TASK_SERVICE_URL=http://task-service:4002
+    depends_on:
+      - auth-service
+      - task-service
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  mongo-data:

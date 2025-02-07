@@ -1,0 +1,4 @@
+packages:
+  - "auth-service"
+  - "task-service"
+  - "api-gateway"

@@ -1,0 +1,8 @@
+node_modules
+.git
+.idea  # Or any IDE-specific files
+*.log
+.env   # Unless you have a very specific reason to include it (generally avoid this)
+dist    # Usually you build inside the container, so no need to copy the dist
+build   # Same as dist
+coverage

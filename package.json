@@ -2,33 +2,19 @@
   "name": "backend-mern-stack",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
-  
   "scripts": {
+    "install:all": "pnpm install",
+    "build:all": "docker-compose build --no-cache && docker-compose up -d",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.ts",
-    "dev": "nodemon server.ts"
+    "auth-service:dev": "cd auth-service && pnpm run dev",
+    "task-service:dev": "cd task-service && pnpm run dev",
+    "api-gateway:dev": "cd api-gateway && pnpm run dev",
+
+    "auth-service:start": "cd auth-service && pnpm run start",
+    "task-service:start": "cd task-service && pnpm run start",
+    "api-gateway:start": "cd api-gateway && pnpm run start"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "compression": "^1.7.5",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "express-rate-limit": "^7.5.0",
-    "helmet": "^8.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.7",
-    "morgan": "^1.10.0",
-    "winston": "^3.17.0"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.13.1",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2"
-  }
+  "license": "ISC"
 }

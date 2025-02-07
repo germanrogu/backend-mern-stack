@@ -1,0 +1,4 @@
+FROM node:18
+WORKDIR /usr/src/app
+COPY pnpm-workspace.yaml ./
+RUN ls -l
